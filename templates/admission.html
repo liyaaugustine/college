@@ -1,0 +1,292 @@
+{% extends 'index.html'%} 
+{%block content%}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admission</title>
+    <script src=" https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script><!--cdn of ajax-->
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script><!--cdn of jqueryvalidation-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <style>
+        .online{
+            border:solid 2px gray;
+            border-top: solid 20px blue;
+            border-radius:55px 0px 0px 0px;
+            width: 600px;
+            height: 100px;
+            text-align: center;
+        }
+        body{
+            background-image: linear-gradient(white, aquamarine);
+        }
+        .error{
+            color: red;
+            font: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row"> 
+                <div class=" col-lg-1 col-md-1 col-sm-1"></div>
+                <div class="col-lg-10 col-md-10 col-sm-8">
+                    <h1 class="online mt-5">Online Admission 2021-2022</h1>
+                    
+                    <form id="admission" method="POST" action="admission" enctype="multipart/form-data">
+                        {% csrf_token %}
+                                <div class="col-md-8">
+                            <h2>Admission for Managment quota</h2>
+
+                            <div class="form-group mb-3">
+                                <label for="app">Application for</label>
+                                <select class="form-control custom-select" id="app" name="usertype" onchange="studhide()">
+                                    <option value="ug">UG</option>   
+                                    <option value="pg">PG</option>     
+                                </select>
+                            </div>
+                            
+                            <div class="form-group mb-3">
+                                <label for="mail" id="elabl">Email</label>
+                                <input type="email" id="mail" name="mail" class="form-control">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="candidate">Name of Candidate</label>
+                                <input type="text" id="candidate" name="candidate" class="form-control">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="parent">Name of Parent</label>
+                                <input type="text" id="parent" name="parent" class="form-control">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="contact">Contact Number</label>
+                                <input type="number" id="contact" name="contact"class="form-control">
+                            </div>
+                            
+                            <div class="form-group mb-3">
+                                <label for="category">Category</label>
+                                <select class="form-control custom-select" id="category" name="category">
+                                    <option  disabled selected></option>
+                                    <option>General</option>
+                                    <option>OBC</option>
+                                    <option>SC</option>
+                                    <option>ST</option>
+                                    <option>OTHERS</option>
+                                </select>
+                            </div>
+                            <!--Ug students data-->
+                            <div id="ug" class="form-group mb-3">
+                                <label for="sub">Subject</label>
+                                <select class="form-control custom-select" id="sub" name="sub">
+                                    <option value="" disabled selected>Select Subject</option>                                   
+                                    <option>BSW</option>                                    
+                                    <option>B.Com</option>
+                                    <option>Bsc.CS</option>
+                                    <option>Bsc.psychology</option>                                    
+                                    <option>BA English</option>
+                                </select>
+                            </div>
+                            <!--end of ug details-->
+
+                            <!--pg students details-->
+                            <div id="pg" style="display: none;">
+                                <div class="form-group mb-3">
+                                    <label for="sub">Subject</label>
+                                    <select class="form-control custom-select" id="subj" name="subj">
+                                        <option value="" disabled selected>Select Subject</option>
+                                        <option>MSW</option>
+                                        <option>M.Com</option>
+                                        <option>Msc.psychology</option>
+                                        <option>MA English</option>
+                                    </select>
+                                </div>    
+                                <div class="form-group mb-3">
+                                    <label for="sslcmark">Degree Mark In Percentage</label>
+                                    <input type="text" id="degremark" name="degremark" class="form-control">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="degree">Degree Mark/Grade</label>
+                                    <input type="file" id="degree" name="degree" class="form-control">
+                                </div>
+                            </div>
+                            <!--end of pg details-->
+
+                            <div class="form-group mb-3">
+                                <label for="sslcmark">SSLC Mark In Percentage</label>
+                                <input type="text" id="sslcmark" name="sslcmark" class="form-control">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="plus2mark">Plus2 Mark In Percentage</label>
+                                <input type="text" id="plusmark" name="plusmark" class="form-control">
+                            </div>
+                            
+                            <div class="form-group mb-3">
+                                <label for="sslc">SSLC Mark/Grade</label>
+                                <input type="file" id="sslc"name="sslc" class="form-control">
+                            </div>
+                            <div class=" form-group mb-3">
+                                    <label for="plus2">Plus 2 Mark/Grade</label>
+                                    <input type="file" id="plus2" name="plus2"class="form-control">
+                            </div>
+                            
+                            <div class="form-group mb-3">
+                                <label for="additional">Additional Qualification</label>
+                                <input type="text" id="additional" name="additional" class="form-control">
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="pass">Password</label>
+                                <input type="password" id="pass" name="pass" class="form-control">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="pass">Confirm Password</label>
+                                <input type="password" id="cpass" name="cpass"class="form-control">
+                            </div>
+                            <div class="mb-3">
+                                <button type="submit" class="btn btn-info btn-lg" >Submitt</button>
+                            </div>
+                        </div>
+                       <label class="text-danger"> {{message}}</label>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+       $(document).ready(function(){
+        jQuery.validator.addMethod("noSpace", function(value, element)
+        {
+                return value.indexOf(" ")< 0 || (value.trim() == value);}); 
+               $('#admission').validate({
+                   rules:{
+                       mail:{
+                            required:true,
+                            noSpace:true
+                        },
+                        candidate:{
+                            required:true,
+                            noSpace:true
+                        },
+                        parent:{
+                            required:true,
+                            noSpace:true
+                        },
+                        contact:{
+                            required:true,
+                            noSpace:true
+                        },
+                        category:{
+                            required:true
+                        },
+                        sub:{
+                            required:true
+                        },
+                        subj:{
+                            required:true
+                        },
+                        sslc:{
+                            required:true
+                        },
+                        plus2:{
+                            required:true
+                        },
+                        degree:{
+                            required:true
+                        },
+                        pass:{
+                            required:true,
+                            minlength:5,
+                            maxlength:8,
+                            noSpace:true 
+                        },
+                        cpass:{
+                            required:true,
+                            equalTo:'#pass',
+                            minlength:5,
+                            noSpace:true 
+                        }
+                   },
+                   messages:{
+                       mail:{
+                        required: 'Please enter your Mail'
+                       },
+                    candidate:{
+                        required:'Name required',
+                        noSpace:'Whitespace not allowed'
+                    },
+                    parent:{
+                        required:'Name required',
+                        noSpace:'Whitespace not allowed'
+                    },
+                    contact:{
+                        required:'Number required',
+                        noSpace:'Whitespace not allowed'
+                    },
+                    sslc:{
+                        required:'please upload this file'
+                    },
+                    plus2:{
+                        required:'please upload this file'
+                    },
+                    degree:{
+                        required:'please upload this file'
+                    },
+                    pass:{
+                        required:'Password required',
+                        minlength: "Your password must be at least 5 characters long",
+                        maxlength:"Your Password must be less than 8 characters",
+                        noSpace:'Whitespace not allowed'
+                    },
+                    cpass:{
+                        equalTo:'Password must need to match'
+                    }
+                   }
+               })
+       })
+    </script>
+              <script>/*checking username already existing or not*/
+                  $(document).ready(function(){
+                    $('#mail').blur(function(){
+                        x=$('#mail').val()
+                        $.ajax({
+                            url:'admson',/*just creating a new url for ajax*/
+                            type:'GET',
+                            data:{
+                                'email':x
+                            },
+                            success:function(response){
+                                if(response.mesg){
+                                    $('#elabl').html('Email already exists')
+                                }
+                                else{
+                                    $('#elabl').html("")
+                                }
+                            }
+                        })
+                    })
+                  })
+              </script>
+        
+        <script>//hiding function 
+            function studhide(){
+                usertype=document.getElementById('app')
+                degre=document.getElementById('ug')
+                postgra=document.getElementById('pg')
+                if(usertype.value=='pg'){
+                    postgra.style.display= "block"
+                    degre.style.display="none"
+                }
+                else{
+                    postgra.style.display= "none"
+                    degre.style.display="block"
+                }
+            }
+        </script>
+
+    
+    {% endblock %}
+</body>
+</html>

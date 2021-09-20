@@ -1,0 +1,23 @@
+.heading{
+    background-image: linear-gradient( white, aquamarine);
+    font-size: 60px;
+    }
+    
+.discover{
+    border:solid;
+    background-color:white;
+    color: rgb(199, 35, 172);
+    border-radius: 22px;
+    width: 230px;
+    height: 80px;
+    font-size: 25px;
+    box-shadow: 10px 10px 12px blue;
+   padding: 10px;
+}
+
+.para{
+    font-size:20px;
+    word-spacing: 8px;
+}
+
+  
